@@ -8,15 +8,18 @@ function setup() {
   loadJSON('https://api.github.com/repos/' + user + '/' + repo + '/releases', gotData);
 
   function gotData(data) {
+    var total = 0;
     for (var i = 0; i < data.length; i++) {
       var release = data[i].assets;
       for (var j = 0; j < release.length; j++) {
-        var div = createDiv(release[j].name + ' ' + release[j].download_count);
+        var div = createDiv(release[j].name + ' ' + release[j].download_count.toLocaleString());
+        total += release[j].download_count;
         div.style('padding', '8px');
         div.style('margin', '2px');
         div.style('background-color', '#EEE');
       }
 
+      select('#total').html('Total downloads: ' + total.toLocaleString());
     }
   }
 
